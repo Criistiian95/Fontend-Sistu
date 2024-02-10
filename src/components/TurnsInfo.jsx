@@ -20,7 +20,7 @@ function TurnsInfo(props) {
   };
 
   const eliminarTurno = () => {
-    fetch(`http://localhost:3003/api/shift/eliminar-turno/${props.id}`, {
+    fetch(`https://sistema-de-turnos-production-e4d9.up.railway.app/api/shift/eliminar-turno/${props.id}`, {
       method: 'DELETE',
     })
       .then((respuesta) => {
@@ -41,7 +41,7 @@ function TurnsInfo(props) {
     props.onUpdateTurnStatus(props.id, !confirmado);
     console.log('ID del turno:', props.id);
     // Realizar una solicitud PUT o PATCH al servidor para actualizar el estado del turno
-    fetch(`http://localhost:3003/api/shift/cambiar-estado/${props.id}`, {
+    fetch(`https://sistema-de-turnos-production-e4d9.up.railway.app/api/shift/cambiar-estado/${props.id}`, {
       method: 'PUT', // O 'PATCH' según la API
       headers: {
         'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ function TurnsInfo(props) {
 
   useEffect(() => {
     // Obtener datos del paciente
-    fetch(`http://localhost:3003/api/patient/search?dni=${props.patient}`)
+    fetch(`https://sistema-de-turnos-production-e4d9.up.railway.app/api/patient/search?dni=${props.patient}`)
       .then((respuesta) => {
         if (!respuesta.ok) {
           throw new Error(`Error ${respuesta.status} - ${respuesta.statusText}`);
@@ -83,7 +83,7 @@ function TurnsInfo(props) {
       });
   
     // Obtener datos del médico
-    fetch(`http://localhost:3003/api/doctor/search?tuition=${props.doctor}`)
+    fetch(`https://sistema-de-turnos-production-e4d9.up.railway.app/api/doctor/search?tuition=${props.doctor}`)
       .then((respuesta) => {
         if (!respuesta.ok) {
           throw new Error(`Error ${respuesta.status} - ${respuesta.statusText}`);

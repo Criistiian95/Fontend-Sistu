@@ -35,7 +35,7 @@ function RegisterUser() {
                 console.error('Datos inválidos');
                 return;
             }
-            const response = await fetch(`http://localhost:3003/api/user/Registro-usuario`, {
+            const response = await fetch(`https://sistema-de-turnos-production-e4d9.up.railway.app/api/user/Registro-usuario`, {
                 method: 'POST',
                 credentials: "include",
                 headers: {

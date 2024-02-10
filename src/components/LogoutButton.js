@@ -11,7 +11,7 @@ function LogoutButton() {
       
 
       // Envía una solicitud al servidor para cerrar la sesión del usuario
-      const response = await fetch(`http://localhost:3003/api/user/logout`, {
+      const response = await fetch(`https://sistema-de-turnos-production-e4d9.up.railway.app/api/user/logout`, {
                 method: 'POST',
                 credentials:"include",
                 headers: {

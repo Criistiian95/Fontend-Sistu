@@ -36,7 +36,7 @@ function RegisterDoctor() {
                 console.error('Datos inválidos');
                 return;
             }
-            const response = await fetch(`http://localhost:3003/api/doctor/createDoctor`, {
+            const response = await fetch(`https://sistema-de-turnos-production-e4d9.up.railway.app/api/doctor/createDoctor`, {
                 method: 'POST',
                 credentials: "include",
                 headers: {

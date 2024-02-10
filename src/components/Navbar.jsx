@@ -12,7 +12,7 @@ function Navbar() {
       const userIdFromLocalStorage = getUserIdFromLocalStorage();
 
       if (userIdFromLocalStorage) {
-        fetch(`http://localhost:3003/api/user/${userIdFromLocalStorage}`)
+        fetch(`https://sistema-de-turnos-production-e4d9.up.railway.app/api/user/${userIdFromLocalStorage}`)
           .then((response) => response.json())
           .then((data) => {
             if (data.user) {
@@ -39,7 +39,7 @@ function Navbar() {
             <div className="list-group list-group-flush mx-3 mt-4" style={{gap:"30px"}}>
 
               <button className='input btn'><a className='link-underline-opacity-0 fw-bolder  text-light text-decoration-none' 
-href={`http://localhost:3000/api/user/${user}`}>Home</a></button>
+href={`https://sistema-de-turnos-production-e4d9.up.railway.app/api/user/${user}`}>Home</a></button>
 
             <button className='input btn ' ><a className='link-underline-opacity-0 fw-bolder text-light text-decoration-none' 
             href="/turnos">Agendar Turnos</a></button>

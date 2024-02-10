@@ -38,7 +38,7 @@ function TurnsPatients() {
 
     useEffect(() => {
         if (selectedPatient && selectedPatient.DNI) {
-            fetch(`http://localhost:3003/api/shift/patient/${selectedPatient.DNI}`)
+            fetch(`https://sistema-de-turnos-production-e4d9.up.railway.app/api/shift/patient/${selectedPatient.DNI}`)
                 .then((respuesta) => {
                     if (!respuesta.ok) {
                         throw new Error(`Error ${respuesta.status} - ${respuesta.statusText}`);
@@ -58,7 +58,7 @@ function TurnsPatients() {
 
     const handleSubmit = (values) => {
         // Realizar una solicitud GET al servidor para buscar al paciente por el DNI ingresado en values.dni
-        fetch(`http://localhost:3003/api/patient/search?dni=${values.dni}`)
+        fetch(`https://sistema-de-turnos-production-e4d9.up.railway.app/api/patient/search?dni=${values.dni}`)
 
             .then((respuesta) => {
                 if (!respuesta.ok) {

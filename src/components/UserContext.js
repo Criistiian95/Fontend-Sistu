@@ -15,7 +15,7 @@ export const getUserIdFromLocalStorage = () => {
       const userId = getUserIdFromLocalStorage();
   
       if (userId) {
-        fetch(`http://localhost:3003/api/user/${userId}`)
+        fetch(`https://sistema-de-turnos-production-e4d9.up.railway.app/api/user/${userId}`)
           .then((response) => response.json())
           .then((data) => {
             if (data.user) {

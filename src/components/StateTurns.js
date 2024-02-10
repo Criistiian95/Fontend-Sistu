@@ -25,7 +25,7 @@ const handleDeleteTurn = (turnId) => {
 
   useEffect(() => {
     // Realizar una solicitud GET al servidor para obtener los horarios ocupados
-    fetch("http://localhost:3003/api/shift/estado-turnos")
+    fetch("https://sistema-de-turnos-production-e4d9.up.railway.app/api/shift/estado-turnos")
       .then((respuesta) => {
         if (!respuesta.ok) {
           throw new Error(`Error ${respuesta.status} - ${respuesta.statusText}`);

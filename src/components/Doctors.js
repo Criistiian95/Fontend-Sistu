@@ -26,7 +26,7 @@ const { selectedPatient } = usePatientContext();
 
 const handleSubmit=(values)=>{
     // Realizar una solicitud GET al servidor para buscar al paciente por el DNI ingresado en values.dni
-    fetch(`http://localhost:3003/api/doctor/search?tuition=${values.tuition}`)
+    fetch(`https://sistema-de-turnos-production-e4d9.up.railway.app/api/doctor/search?tuition=${values.tuition}`)
   
     .then((respuesta) => {
         if (!respuesta.ok) {

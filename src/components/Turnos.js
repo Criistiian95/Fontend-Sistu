@@ -74,7 +74,7 @@ function Turnos() {
 
 
         // Realiza una solicitud POST al servidor para crear un nuevo turno
-        const respuesta = await fetch("http://localhost:3003/api/shift/create", {
+        const respuesta = await fetch("https://sistema-de-turnos-production-e4d9.up.railway.app/api/shift/create", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
