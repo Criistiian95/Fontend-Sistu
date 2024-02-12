@@ -50,7 +50,7 @@ function RegisterUser() {
                 navigate("/login", { replace: true });
             } else {
                 console.error('Error envio de 400');
-                window.location.href = "/api/Registro-usuario"
+                window.location.href = "/register"
             }
         } catch (error) {
             console.error('Error en la solicitud:', error);
