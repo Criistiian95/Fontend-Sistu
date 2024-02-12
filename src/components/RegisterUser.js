@@ -12,15 +12,16 @@ function RegisterUser() {
         apellido: '',
         email: '',
         password: '',
-        roles: '',
+        role: '',
     };
+
 
     const validationSchema = Yup.object().shape({
         nombre: Yup.string().required('El nombre del usuario es obligatorio'),
         apellido: Yup.string().required('El apellido del usuario es obligatorio'),
         email: Yup.string().email('El correo electrónico no es válido').required('El correo electrónico es obligatorio'),
         password: Yup.string().min(8, 'La contraseña debe tener al menos 8 caracteres').required('La contraseña es obligatoria'),
-        roles: Yup.string().required("Debe elegir un rol"),
+        role: Yup.string().required("Debe elegir un rol"),
     });
 
     const handleSubmit = async (values, id) => {
@@ -29,8 +30,9 @@ function RegisterUser() {
             const isValid = await validationSchema.isValid(values);
             const requestBody = {
                 ...values
+                
             }
-
+            console.log(values);
             if (!isValid) {
                 console.error('Datos inválidos');
                 return;
@@ -43,7 +45,7 @@ function RegisterUser() {
                 },
                 body: JSON.stringify(requestBody),
             });
-            console.log(response)
+          console.log(requestBody);
             if (response.ok) {
                 const data = await response.json()
                 console.log("Inicio exitoso", data.id)
@@ -103,13 +105,13 @@ function RegisterUser() {
                                                             <label className="form-label" for="form2Example17" style={{ fontSize: "30px" }}>Elija su rol</label>
                                                             <div>
 
-                                                                <Field as="select" name="roles">
+                                                                <Field as="select" name="role">
                                                                     <option value="" label="Selecciona un rol" />
                                                                     <option value="1" label="Administrador" />
                                                                     <option value="2" label="Moderador" />
                                                                     <option value="3" label="Usuario" />
                                                                 </Field>
-                                                                <ErrorMessage name="roles" component="div" />
+                                                                <ErrorMessage name="role" component="div" />
                                                             </div>
                                                         </div>
                                                         <div className="pt-1 mb-4">
