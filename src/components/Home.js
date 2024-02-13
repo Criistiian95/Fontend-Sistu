@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 function Login() {
     const navigate = useNavigate()
     const [rememberMe, setRememberMe] = useState(false);
-
+    console.log(localStorage);
     const initialValues = {
         email: '',
         password: '',
@@ -52,6 +52,7 @@ function Login() {
 
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('userId', data.id);
+                
                 
                 navigate(`/api/user/${data.id}`, { replace: true });
             } else {

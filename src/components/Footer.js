@@ -42,7 +42,7 @@ function Footer() {
                 </div>
           
             <div className=" p-3" style={{ backgroundColor: "rgba(0, 0, 0, 0.05);" }}>
-                <span>© 2020 Copyright </span>
+                <span>© 2024 Copyright </span>
                 <br/>
                 <a className="text-body" href="https://www.instagram.com/disenos__ls"> Diseños L&S &reg;</a>
             </div>

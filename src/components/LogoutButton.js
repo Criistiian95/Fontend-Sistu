@@ -4,11 +4,7 @@ function LogoutButton() {
   const handleLogout = async () => {
     try {
 
-      localStorage.removeItem('token');
-
-      // Establece una nueva cookie con un tiempo de expiración pasado
-      
-      
+      localStorage.clear('token');
 
       // Envía una solicitud al servidor para cerrar la sesión del usuario
       const response = await fetch(`https://sistema-de-turnos-production-e4d9.up.railway.app/api/user/logout`, {
@@ -21,6 +17,7 @@ function LogoutButton() {
 
       if (response.ok) {
         // El usuario cierra la sesión, puedes redirigirlo a la página de inicio o a donde desees
+       
         console.log("sesion cerrada")
         
         window.location.href = '/login'; // Redirige a la página de inicio de sesión
@@ -34,7 +31,7 @@ function LogoutButton() {
     }
     
   };
-
+ 
   return (
     <div className=' justify-content py-5 h-100'>
     <p>

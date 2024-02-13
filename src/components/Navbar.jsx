@@ -3,14 +3,17 @@ import LogoutButton from './LogoutButton';
 import User from './User';
 import { useUser, getUserIdFromLocalStorage } from './UserContext';
 import logo from "../assets/Sismed-logo.jpg"
-import userEvent from '@testing-library/user-event';
+import { useNavigate } from 'react-router-dom';
+
 
 function Navbar() {
-  const { user, setUser } = useUser();
+  const { user, setUser } = useUser(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!user) {
       const userIdFromLocalStorage = getUserIdFromLocalStorage();
+      console.log(userIdFromLocalStorage)
 
       if (userIdFromLocalStorage) {
         fetch(`https://sistema-de-turnos-production-e4d9.up.railway.app/api/user/${userIdFromLocalStorage}`)
@@ -18,9 +21,10 @@ function Navbar() {
           .then((data) => {
             if (data.user) {
               setUser(data.user);
-              
+              console.log(data)
             } else {
               console.error('Error al obtener el perfil del usuario desde localStorage:', data.message);
+             
             }
           })
           .catch((error) => {
@@ -28,10 +32,11 @@ function Navbar() {
           });
       } else {
         console.log('No hay userId en localStorage');
+        navigate(`/login`, { replace: true });
       }
     }
-  }, [user, setUser]);
-  console.log(user);
+  }, [navigate]);
+
   return (
     <React.Fragment>
 
