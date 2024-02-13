@@ -3,6 +3,7 @@ import LogoutButton from './LogoutButton';
 import User from './User';
 import { useUser, getUserIdFromLocalStorage } from './UserContext';
 import logo from "../assets/Sismed-logo.jpg"
+import userEvent from '@testing-library/user-event';
 
 function Navbar() {
   const { user, setUser } = useUser();
@@ -39,7 +40,7 @@ function Navbar() {
             <div className="list-group list-group-flush mx-3 mt-4" style={{gap:"30px"}}>
 
               <button className='input btn'><a className='link-underline-opacity-0 fw-bolder  text-light text-decoration-none' 
-href={`https://sistema-de-turnos-production-e4d9.up.railway.app/api/user/${user}`}>Home</a></button>
+href={`https://fontend-sistu-production.up.railway.app/api/user/${user}`}>Home</a></button>
 
             <button className='input btn ' ><a className='link-underline-opacity-0 fw-bolder text-light text-decoration-none' 
             href="/turnos">Agendar Turnos</a></button>
