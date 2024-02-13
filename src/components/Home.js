@@ -91,7 +91,7 @@ function Login() {
                                                         </div>
                                                         <span className="h1 fw-bold mb-0">Sistema de turnos medicos</span>
                                                     </div>
-                                                    <h5 className="fw-normal mb-3 pb-3" style={{ letterSpacing: "1px" }}>Sign into your account</h5>
+                                                    <h5 className="fw-normal mb-3 pb-3" style={{ letterSpacing: "1px" }}>Inicia Sesion</h5>
                                                     <div className='form-outline mb-4'>
                                                         <label className="form-label" for="form2Example17" style={{ fontSize: "30px" }}>Email</label>
                                                         <Field type="email" id="email form2Example17" name="email" className="form-control form-control-lg" />
