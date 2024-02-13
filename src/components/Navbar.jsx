@@ -18,7 +18,7 @@ function Navbar() {
           .then((data) => {
             if (data.user) {
               setUser(data.user);
-              console.log(userIdFromLocalStorage)
+              
             } else {
               console.error('Error al obtener el perfil del usuario desde localStorage:', data.message);
             }

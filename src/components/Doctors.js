@@ -41,8 +41,7 @@ const handleSubmit=(values)=>{
         } else {
             selectDoctor(datos.doctor);
         }
-        console.log(selectedDoctor)
-        console.log(selectedPatient)
+      
     })
         .catch((error) => {
             console.error('Error al buscar medico:', error);

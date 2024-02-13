@@ -76,9 +76,7 @@ function TurnsPatients() {
                     selectPatient(datos.patient);
                     selectDoctor(datos.doctor); // Supongamos que también obtienes la información del doctor
                     selectTurn(datos.turn);
-                    console.log(selectedDoctor);
-                    console.log(selectedPatient);
-                    console.log(selectedTurn);
+                
                 }
 
             })

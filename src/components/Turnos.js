@@ -65,12 +65,7 @@ function Turnos() {
           estado_turno: true,
           // Otras propiedades del turno, si es necesario
         };
-        console.log("Paciente:", selectedPatient)
-        console.log("Doctor:", selectedDoctor);
-        console.log("fecha:", selectedDate)
-        console.log("especialidad:", selectedDoctor.specialty.id)
-
-        console.log("Turno:", turnoData);
+       
 
 
         // Realiza una solicitud POST al servidor para crear un nuevo turno
@@ -88,7 +83,7 @@ function Turnos() {
         }
 
         const datos = await respuesta.json()
-        console.log("Turno creado:", datos)
+       
 
         mostrarAlerta();
 

@@ -12,7 +12,6 @@ function Patients() {
 
     };
 
-
     const validationSchema = Yup.object().shape({
         dni: Yup.string().required('El DNI es obligatorio'),
 
@@ -38,11 +37,7 @@ function Patients() {
                     console.error('Error al buscar paciente:', datos.error);
                     // Puedes mostrar el mensaje de error en la interfaz del usuario
                 } else {
-
-
                     selectPatient(datos.patient);
-                    console.log(selectedPatient);
-                    console.log(selectedDoctor)
                 }
 
             })
@@ -52,12 +47,8 @@ function Patients() {
             });
     }
 
-
     return (
-
-
         <div className="container">
-
             <label className="justify-content">Buscar Paciente</label>
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
                 <Form>

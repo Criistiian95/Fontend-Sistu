@@ -10,16 +10,6 @@ function Login() {
     const navigate = useNavigate()
     const [rememberMe, setRememberMe] = useState(false);
 
-
-    useEffect(() => {
-        const isAuthenticated = localStorage.getItem('token');
-        if (isAuthenticated) {
-            // Si el usuario ya está autenticado, redirige a la página principal o a otra página protegida
-            navigate(`/turnos`); // Ajusta la ruta según tu estructura de rutas
-        }
-    }, [navigate]);
-
-
     const initialValues = {
         email: '',
         password: '',
@@ -58,12 +48,11 @@ function Login() {
 
             if (response.ok) {
                 const data = await response.json();
-                console.log('Inicio exitoso', data.id);
+               
 
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('userId', data.id);
-                console.log(data.token);
-                console.log(data);
+                
                 navigate(`/api/user/${data.id}`, { replace: true });
             } else {
                 console.error('Error envio de 400');
@@ -74,9 +63,7 @@ function Login() {
         }
 
     };
-    console.log("cookie", localStorage)
-
-
+    
     return (
 
         <header className="header">

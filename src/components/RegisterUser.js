@@ -32,7 +32,7 @@ function RegisterUser() {
                 ...values
                 
             }
-            console.log(values);
+           
             if (!isValid) {
                 console.error('Datos inválidos');
                 return;
@@ -45,7 +45,7 @@ function RegisterUser() {
                 },
                 body: JSON.stringify(requestBody),
             });
-          console.log(requestBody);
+          
             if (response.ok) {
                 const data = await response.json()
                 console.log("Inicio exitoso", data.id)

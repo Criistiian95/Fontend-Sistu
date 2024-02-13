@@ -44,10 +44,10 @@ function RegisterDoctor() {
                 },
                 body: JSON.stringify(requestBody),
             });
-            console.log(response)
+           
             if (response.ok) {
                 const data = await response.json()
-                console.log("Registro exitoso", data.id)
+               
                 navigate("/turnos", { replace: true });
             } else {
                 console.error('Error envio de 400');

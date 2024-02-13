@@ -34,7 +34,7 @@ function LogoutButton() {
     }
     
   };
-  console.log("cookie", localStorage)
+
   return (
     <div className=' justify-content py-5 h-100'>
     <p>
