@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import TurnsInfo from "./TurnsInfo.jsx";
-import isSameDay from "date-fns/isSameDay/index.js";
+import TurnsInfo from "./TurnsInfo";
+import isSameDay from "date-fns/isSameDay";
 
 
 
@@ -52,18 +52,18 @@ const handleDeleteTurn = (turnId) => {
     <div className="">
       <h2 className="fw-bold justify-content-center d-flex">TURNOS DEL DIA</h2>
       
-      <table className="table table-striped table-dark table-bordered">
-      <caption>Listado de Turnos</caption>
+      <table className="table table-striped table-dark table-bordered table-turns">
+     
         <thead className="thead-dark"> 
           <tr>
-            <th>Fecha</th>
-            <th>Paciente</th>
-            <th>Médico</th>
-            <th>Especialidad</th>
-            <th>Observaciones</th>
-            <th>Opciones</th>
+            <th className="columna">Fecha</th>
+            <th className="columna">Paciente</th>
+            <th className="columna">Médico</th>
+            <th className="columna">Especialidad</th>
+            <th className="columna">Observaciones</th>
+            <th className="columna opci">Opciones</th>
           </tr>
-        </thead>
+          </thead>
         <tbody>
         {occupiedShifts.map((shift, index) => (
     <TurnsInfo
@@ -79,8 +79,10 @@ const handleDeleteTurn = (turnId) => {
     />
 ))}
       </tbody>
+     
       </table>
     </div>
+    
   );
 }
 

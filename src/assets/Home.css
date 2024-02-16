@@ -67,6 +67,25 @@
 
 }
 
+.password-wrapper {
+   position: relative;
+ }
+
+.toggle-button {
+   display: inline-flex;
+   position: absolute;
+   top: 70%;
+   transform: translateY(-50%);
+   left: unset;
+   right: 12px;
+   cursor: pointer;
+ }
+ 
+ .eye-icon {
+   width: 20px;
+   height: 20px;
+ }
+
 .enlaces {
    color: black;
    text-decoration: none;
@@ -143,6 +162,22 @@
     border-color: #4C4D4D;
     color: black;
 }
+@media (max-width: 425px){
+.columna{
+   display: flex;
+}
 
+.columna.opci{
+   padding: 23px;
+}
 
+.table-turns{
+   width: 100%;
+   display: flex;
 
+}
+.react-datepicker__month-container{
+   width: 200px;
+}
+
+}

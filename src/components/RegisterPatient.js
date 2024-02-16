@@ -5,7 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
 import { useNavigate } from 'react-router-dom';
-import Navbar from "./Navbar.jsx";
+import Navbar from "./Navbar";
 
 function RegisterPatient() {
 
@@ -51,7 +51,7 @@ function RegisterPatient() {
                 },
                 body: JSON.stringify(requestBody),
             });
-           
+            console.log(response)
             if (response.ok) {
                 const data = await response.json()
                 console.log("Registro exitoso", data.id)

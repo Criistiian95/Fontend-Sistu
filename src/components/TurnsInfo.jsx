@@ -1,3 +1,4 @@
+import { faDisplay } from "@fortawesome/free-solid-svg-icons";
 import React, { useState, useEffect } from "react";
 
 
@@ -118,12 +119,12 @@ function TurnsInfo(props) {
       
       <tr>
     
-      <td>{fechaFormateada}</td>
-      <td>{`${patientData.patient.name} ${patientData.patient.lastname}`}</td>
-      <td>{`${doctorData.doctor.name} ${doctorData.doctor.lastname}`}</td>
-      <td>{`${doctorData.doctor.specialty.name}`}</td>
-      <td>{props.observaciones ? props.observaciones : "No hay observaciones"}</td>
-      <td>
+      <td className="columna">{fechaFormateada}</td>
+      <td className="columna">{`${patientData.patient.name} ${patientData.patient.lastname}`}</td>
+      <td className="columna">{`${doctorData.doctor.name} ${doctorData.doctor.lastname}`}</td>
+      <td className="columna">{`${doctorData.doctor.specialty.name}`}</td>
+      <td className="columna">{props.observaciones ? props.observaciones : "No hay observaciones"}</td>
+      <td className="columna">
         {confirmado && <span>Confirmado</span>}
         {!confirmado && <button className="btn btn-success btn-sm" onClick={cambiarEstado}>Liberar</button>}
         

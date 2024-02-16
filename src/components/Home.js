@@ -7,9 +7,22 @@ import { useNavigate } from 'react-router-dom';
 
 
 function Login() {
+
+
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate()
     const [rememberMe, setRememberMe] = useState(false);
-    console.log(localStorage);
+
+
+    useEffect(() => {
+        const isAuthenticated = localStorage.getItem('token');
+        if (isAuthenticated) {
+            // Si el usuario ya está autenticado, redirige a la página principal o a otra página protegida
+            navigate(`/turnos`); // Ajusta la ruta según tu estructura de rutas
+        }
+    }, [navigate]);
+
+
     const initialValues = {
         email: '',
         password: '',
@@ -48,12 +61,8 @@ function Login() {
 
             if (response.ok) {
                 const data = await response.json();
-               
-
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('userId', data.id);
-                
-                
                 navigate(`/api/user/${data.id}`, { replace: true });
             } else {
                 console.error('Error envio de 400');
@@ -64,7 +73,8 @@ function Login() {
         }
 
     };
-    
+  
+
     return (
 
         <header className="header">
@@ -91,16 +101,22 @@ function Login() {
                                                         </div>
                                                         <span className="h1 fw-bold mb-0">Sistema de turnos medicos</span>
                                                     </div>
-                                                    <h5 className="fw-normal mb-3 pb-3" style={{ letterSpacing: "1px" }}>Inicia Sesion</h5>
+                                                    <h5 className="fw-normal mb-3 pb-3" style={{ letterSpacing: "1px" }}>Sign into your account</h5>
                                                     <div className='form-outline mb-4'>
-                                                        <label className="form-label" for="form2Example17" style={{ fontSize: "30px" }}>Email</label>
+                                                        <label className="form-label" for="form2Example17" style={{ fontSize: "15px" }}>Email</label>
                                                         <Field type="email" id="email form2Example17" name="email" className="form-control form-control-lg" />
                                                         <ErrorMessage name="email" component="div" />
                                                     </div>
-                                                    <div className='form-outline mb-4'>
-                                                        <label className="form-label" for="form2Example17" style={{ fontSize: "30px" }}>Contraseña</label>
-                                                        <Field type="password" id="password form2Example27" className="form-control form-control-lg" name="password" />
-                                                        <ErrorMessage name="password" component="div" />
+                                                    <div className='form-outline mb-4 password-wrapper'>
+                                                        <label className="form-label" for="form2Example17" style={{ fontSize: "15px" }}>Contraseña</label>
+                                                        <Field type={showPassword ? 'text' : 'password'} id="password form2Example27" className="form-control form-control-lg" name="password" />
+                                                        <ErrorMessage name="password" component="div" /><div class="toggle-button">
+                                                            <svg onClick={() => setShowPassword(!showPassword)} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="eye-icon">
+                                                                <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
+                                                                <path fill-rule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z" clip-rule="evenodd" />
+                                                                {showPassword ? 'Ocultar' : 'Mostrar'}
+                                                            </svg>
+                                                        </div>
                                                     </div>
                                                     <div className="pt-1 mb-4">
                                                         <button type="submit" className="btn btn-success btn-lg btn-block">Iniciar sesión</button>

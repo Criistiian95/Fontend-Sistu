@@ -3,7 +3,7 @@ import LogoutButton from './LogoutButton';
 import User from './User';
 import { useUser, getUserIdFromLocalStorage } from './UserContext';
 import logo from "../assets/Sismed-logo.jpg"
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from "react-router-dom" 
 
 
 function Navbar() {
@@ -13,7 +13,7 @@ function Navbar() {
   useEffect(() => {
     if (!user) {
       const userIdFromLocalStorage = getUserIdFromLocalStorage();
-      console.log(userIdFromLocalStorage)
+     
 
       if (userIdFromLocalStorage) {
         fetch(`https://sistema-de-turnos-production-e4d9.up.railway.app/api/user/${userIdFromLocalStorage}`)
@@ -21,7 +21,7 @@ function Navbar() {
           .then((data) => {
             if (data.user) {
               setUser(data.user);
-              console.log(data)
+         
             } else {
               console.error('Error al obtener el perfil del usuario desde localStorage:', data.message);
              

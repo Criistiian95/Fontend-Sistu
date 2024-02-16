@@ -12,9 +12,8 @@ function RegisterUser() {
         apellido: '',
         email: '',
         password: '',
-        role: '',
+        roles: '',
     };
-
 
     const validationSchema = Yup.object().shape({
         nombre: Yup.string().required('El nombre del usuario es obligatorio'),
@@ -30,9 +29,8 @@ function RegisterUser() {
             const isValid = await validationSchema.isValid(values);
             const requestBody = {
                 ...values
-                
             }
-           
+
             if (!isValid) {
                 console.error('Datos inválidos');
                 return;
@@ -45,14 +43,14 @@ function RegisterUser() {
                 },
                 body: JSON.stringify(requestBody),
             });
-          
+            console.log(response)
             if (response.ok) {
                 const data = await response.json()
                 console.log("Inicio exitoso", data.id)
                 navigate("/login", { replace: true });
             } else {
                 console.error('Error envio de 400');
-                window.location.href = "/register"
+                window.location.href = "/api/Registro-usuario"
             }
         } catch (error) {
             console.error('Error en la solicitud:', error);
@@ -68,7 +66,7 @@ function RegisterUser() {
                         <div className='col col-xl-10'>
                             <div className='card' style={{ borderRadius: "1rem" }}>
                                 <div className='d-flex justify-content-center'>
-                                    <div class="col-md-6 col-lg-5 d-none d-md-block">
+                                    <div class="col-md-6 col-lg-5 d-md-block">
                                         <div className="col-md-6 col-lg-7 d-flex align-items-center">
                                             <div className='card-body p-4 p-lg-5 text-black'>
                                                 <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
@@ -82,27 +80,27 @@ function RegisterUser() {
                                                         </div>
                                                         <h3 className="fw-normal mb-3 pb-3" style={{ letterSpacing: "1px" }}>Registra el nuevo usuario</h3>
                                                         <div className='form-outline mb-4'>
-                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "30px" }}>Nombre</label>
+                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "15px" }}>Nombre</label>
                                                             <Field type="text" name="nombre" />
                                                             <ErrorMessage name="nombre" component="div" />
                                                         </div>
                                                         <div className='form-outline mb-4'>
-                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "30px" }}>Apellido</label>
+                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "15px" }}>Apellido</label>
                                                             <Field type="text" name="apellido" />
                                                             <ErrorMessage name="apellido" component="div" />
                                                         </div>
                                                         <div className='form-outline mb-4'>
-                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "30px" }}>Email</label>
+                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "15px" }}>Email</label>
                                                             <Field type="email" name="email" />
                                                             <ErrorMessage name="email" component="div" />
                                                         </div>
                                                         <div className='form-outline mb-4'>
-                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "30px" }}>Contraseña</label>
+                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "15px" }}>Contraseña</label>
                                                             <Field type="password" name="password" />
                                                             <ErrorMessage name="password" component="div" />
                                                         </div>
                                                         <div className='form-outline mb-4'>
-                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "30px" }}>Elija su rol</label>
+                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "15px" }}>Elija su rol</label>
                                                             <div>
 
                                                                 <Field as="select" name="role">
@@ -111,7 +109,7 @@ function RegisterUser() {
                                                                     <option value="2" label="Moderador" />
                                                                     <option value="3" label="Usuario" />
                                                                 </Field>
-                                                                <ErrorMessage name="role" component="div" />
+                                                                <ErrorMessage name="roles" component="div" />
                                                             </div>
                                                         </div>
                                                         <div className="pt-1 mb-4">

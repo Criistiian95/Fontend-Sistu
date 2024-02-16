@@ -3,7 +3,7 @@ import "../assets/Home.css"
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate, useParams } from 'react-router-dom';
-import Navbar from "./Navbar.jsx";
+import Navbar from "./Navbar";
 
 
 function RegisterDoctor() {
@@ -44,10 +44,10 @@ function RegisterDoctor() {
                 },
                 body: JSON.stringify(requestBody),
             });
-           
+            console.log(response)
             if (response.ok) {
                 const data = await response.json()
-               
+                console.log("Registro exitoso", data.id)
                 navigate("/turnos", { replace: true });
             } else {
                 console.error('Error envio de 400');

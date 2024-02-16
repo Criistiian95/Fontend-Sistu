@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import { DoctorProvider } from "./components/DoctorContext.js";
-import App from './App.js';
-import reportWebVitals from './reportWebVitals.js';
-import { PatientProvider } from './components/PatientContext.js';
-import { HorariosProvider } from './components/HorariosContext.js';
-import { FechasOcupadasProvider } from './components/FechasContext.js';
-
+import { DoctorProvider } from "./components/DoctorContext";
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import { PatientProvider } from './components/PatientContext';
+import { HorariosProvider } from './components/HorariosContext';
+import { FechasOcupadasProvider } from './components/FechasContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -16,8 +15,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    
-    <DoctorProvider>
+      <DoctorProvider>
       <PatientProvider>{/* Envuelve tu aplicación con DoctorProvider */}
         <HorariosProvider>
           <FechasOcupadasProvider>
@@ -28,7 +26,6 @@ root.render(
         </HorariosProvider>
       </PatientProvider>
     </DoctorProvider>
-  
   </React.StrictMode>
 );
 

@@ -1,8 +1,8 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { usePatientContext } from "./PatientContext.js";
-import { useDoctorContext } from "./DoctorContext.js";
+import { usePatientContext } from "./PatientContext";
+import { useDoctorContext } from "./DoctorContext";
 
 
 function Patients() {
@@ -11,6 +11,7 @@ function Patients() {
         dni: '',
 
     };
+
 
     const validationSchema = Yup.object().shape({
         dni: Yup.string().required('El DNI es obligatorio'),
@@ -37,7 +38,11 @@ function Patients() {
                     console.error('Error al buscar paciente:', datos.error);
                     // Puedes mostrar el mensaje de error en la interfaz del usuario
                 } else {
+
+
                     selectPatient(datos.patient);
+                    console.log(selectedPatient);
+                    console.log(selectedDoctor)
                 }
 
             })
@@ -47,8 +52,12 @@ function Patients() {
             });
     }
 
+
     return (
+
+
         <div className="container">
+
             <label className="justify-content">Buscar Paciente</label>
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
                 <Form>
