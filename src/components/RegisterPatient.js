@@ -69,13 +69,14 @@ function RegisterPatient() {
     return (
         <header className="header">
             <section style={{ backgroundColor: "#AAF3E0" }}>
+           
                 <div className="container py-5 h-100">
-                    <Navbar userId={userId} />
+                <Navbar userId={userId} />
                     <div className='row d-flex justify-content-center align-items-center h-100'>
                         <div className='col col-xl-10'>
                             <div className='card' style={{ borderRadius: "1rem" }}>
                                 <div className='d-flex justify-content-center'>
-                                    <div class="col-md-6 col-lg-5 d-none d-md-block">
+                                    <div class="col-md-6 col-lg-5 d-md-block">
                                         <div className="col-md-6 col-lg-7 d-flex align-items-center">
                                             <div className='card-body p-4 p-lg-5 text-black'>
                                                 <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
@@ -89,32 +90,32 @@ function RegisterPatient() {
                                                         </div>
                                                         <h5 className="fw-normal mb-3 pb-3" style={{ letterSpacing: "1px" }}>Registra el nuevo paciente</h5>
                                                         <div className='form-outline mb-4'>
-                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "30px" }}>DNI</label>
+                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "15px" }}>DNI</label>
                                                             <Field type="number" name="dni" className="form-control form-control-lg" />
                                                             <ErrorMessage name="dni" component="div" />
                                                         </div>
                                                         <div className='form-outline mb-4'>
-                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "30px" }}>Nombre</label>
+                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "15px" }}>Nombre</label>
                                                             <Field type="text" name="name" className="form-control form-control-lg" />
                                                             <ErrorMessage name="name" component="div" />
                                                         </div>
                                                         <div className='form-outline mb-4'>
-                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "30px" }}>Apellido</label>
+                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "15px" }}>Apellido</label>
                                                             <Field type="text" name="lastname" className="form-control form-control-lg" />
                                                             <ErrorMessage name="lastname" component="div" />
                                                         </div>
                                                         <div className='form-outline mb-4'>
-                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "30px" }}>Telefono</label>
+                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "15px" }}>Telefono</label>
                                                             <Field type="number" name="phone" className="form-control form-control-lg" />
                                                             <ErrorMessage name="phone" component="div" />
                                                         </div>
                                                         <div className='form-outline mb-4'>
-                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "30px" }}>Calle y numero</label>
+                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "15px" }}>Calle y numero</label>
                                                             <Field type="text" name="street" className="form-control form-control-lg" />
                                                             <ErrorMessage name="street" component="div" />
                                                         </div>
                                                         <div className='form-outline mb-4'>
-                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "30px" }}>Localidad</label>
+                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "15px" }}>Localidad</label>
                                                             <Field type="text" name="location" className="form-control form-control-lg" />
                                                             <ErrorMessage name="location" component="div" />
                                                         </div>
@@ -127,13 +128,17 @@ function RegisterPatient() {
                                         </div>
                                     </div>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
                 </div>
+            
+  
             </section>
+           
         </header>
-    );
+     );    
 }
 
 export default RegisterPatient;

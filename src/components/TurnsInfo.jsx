@@ -98,10 +98,6 @@ function TurnsInfo(props) {
       });
   }, [props.patient, props.doctor]);
 
-  console.log('TurnsInfo props:', props);
-  console.log(doctorData);
-  console.log(patientData);
-
   if (patientError || doctorError) {
     console.error('Error al obtener datos:', patientError || doctorError);
     return null;

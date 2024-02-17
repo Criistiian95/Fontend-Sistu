@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams } from "react-router-dom";
 import "../assets/Home.css";
 import "../assets/App.css"
+import "../assets/Turnero.css"
 import StateTurns from './StateTurns.js';
 import Navbar from './Navbar.jsx';
 

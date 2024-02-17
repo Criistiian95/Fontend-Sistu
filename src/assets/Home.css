@@ -10,6 +10,8 @@
    justify-content: center;
 }
 
+
+
 .h2,
 .justify-content {
    color: #EAF2F9
@@ -142,14 +144,6 @@
    border-radius: 5px;
 }
 
-.ejemplo-image {
-   background-image: url("tanana.jpg");
-   height: 70px;
-   background-size: cover;
-   background-position: center center;
-   border-top-left-radius: 10px;
-   border-top-right-radius: 10px;
-}
 
 .definition-patient {
    padding: 5px;

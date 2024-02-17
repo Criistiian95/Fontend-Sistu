@@ -94,7 +94,7 @@ function TurnsPatients() {
 <div>
  
         <div className="d-flex align-content-center flex-wrap flex-column">
-    
+        <Navbar userId={userId} />
 
 <label className="form-label" for="form2Example17" style={{ fontSize: "30px" }}>Buscar Paciente</label>
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
@@ -152,7 +152,7 @@ function TurnsPatients() {
             <button className="btn btn-success btn-lg" onClick={() => { selectPatient(null); selectDoctor(null); selectTurn(null); }}>Limpiar selección</button>
             </div>
             <div>
-    <Navbar userId={userId} />
+    
     </div>
         </div>
     )

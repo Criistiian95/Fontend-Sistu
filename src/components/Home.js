@@ -81,6 +81,7 @@ function Login() {
             <section style={{ backgroundColor: "#AAF3E0" }}>
 
                 <div className="container py-5 h-100">
+                <Navbar userId={userId} />
                     <div className='row d-flex justify-content-center align-items-center h-100'>
                         <div className='col col-xl-10'>
                             <div className='card' style={{ borderRadius: "1rem" }}>
@@ -101,7 +102,7 @@ function Login() {
                                                         </div>
                                                         <span className="h1 fw-bold mb-0">Sistema de turnos medicos</span>
                                                     </div>
-                                                    <h5 className="fw-normal mb-3 pb-3" style={{ letterSpacing: "1px" }}>Sign into your account</h5>
+                                                    <h5 className="fw-normal mb-3 pb-3" style={{ letterSpacing: "1px" }}>Ingresa con tu cuenta</h5>
                                                     <div className='form-outline mb-4'>
                                                         <label className="form-label" for="form2Example17" style={{ fontSize: "15px" }}>Email</label>
                                                         <Field type="email" id="email form2Example17" name="email" className="form-control form-control-lg" />

@@ -68,7 +68,7 @@ function RegisterDoctor() {
                         <div className='col col-xl-10'>
                             <div className='card' style={{ borderRadius: "1rem" }}>
                                 <div className='d-flex justify-content-center'>
-                                    <div class="col-md-6 col-lg-5 d-none d-md-block">
+                                    <div class="col-md-6 col-lg-5  d-md-block">
                                         <div className="col-md-6 col-lg-7 d-flex align-items-center">
                                             <div className='card-body p-4 p-lg-5 text-black'>
                                                 <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
@@ -80,26 +80,26 @@ function RegisterDoctor() {
                                                             </div>
                                                             <span className="h1 fw-bold mb-0">Sistema de turnos medicos</span>
                                                         </div>
-                                                        <h5 className="fw-normal mb-3 pb-3" style={{ letterSpacing: "1px" }}>Registra el nuevo paciente</h5>
+                                                        <h5 className="fw-normal mb-3 pb-3" style={{ letterSpacing: "1px" }}>Registra el nuevo medico</h5>
                                                         <div className='form-outline mb-4'>
-                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "30px" }}>Matricula</label>
+                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "15px" }}>Matricula</label>
                                                             <Field type="number" name="tuition" className="form-control form-control-lg" />
                                                             <ErrorMessage name="tuition" component="div" />
                                                         </div>
                                                         <div className='form-outline mb-4'>
-                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "30px" }}>Nombre</label>
+                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "15px" }}>Nombre</label>
                                                             <Field type="text" name="name" className="form-control form-control-lg" />
                                                             <ErrorMessage name="name" component="div" />
                                                         </div>
                                                         <div className='form-outline mb-4'>
-                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "30px" }}>Apellido</label>
+                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "15px" }}>Apellido</label>
                                                             <Field type="text" name="lastname" className="form-control form-control-lg" />
                                                             <ErrorMessage name="lastname" component="div" />
                                                         </div>
                                                         <div className='form-outline mb-4'>
-                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "30px" }}>Elija la especialidad</label>
+                                                            <label className="form-label" for="form2Example17" style={{ fontSize: "15px" }}>Elija la especialidad</label>
                                                             <div>
-                                                                <Field as="select" name="specialty" className="form-control form-control-lg">
+                                                                <Field as="select" name="specialty" className="form-control form-control-lg" style={{ fontSize: "15px" }} >
                                                                     <option value="" label="Selecciona una especialidad" />
                                                                     <option value="1" label="Clinico" />
                                                                     <option value="2" label="Cardiologia" />

@@ -4,6 +4,7 @@ import User from './User';
 import { useUser, getUserIdFromLocalStorage } from './UserContext';
 import logo from "../assets/Sismed-logo.jpg"
 import {useNavigate} from "react-router-dom" 
+import "../assets/Turnero.css"
 
 
 function Navbar() {
@@ -39,10 +40,10 @@ function Navbar() {
 
   return (
     <React.Fragment>
-
-        <nav id="sidebarMenu" className="collapse d-lg-block sidebar collapse bg-secondary">
-          <div className="position-sticky" style={{paddingTop: "10px"}}>
-            <div className="list-group list-group-flush mx-3 mt-4" style={{gap:"30px"}}>
+<div className='navbar-container'>
+        <nav id="sidebarMenu" className=" d-lg-block sidebar bg-secondary">
+          <div className="position-sticky">
+            <div className="list-group list-group-flush mx-3 mt-4">
 
               <button className='input btn'><a className='link-underline-opacity-0 fw-bolder  text-light text-decoration-none' 
 href={`https://fontend-sistu-production.up.railway.app/api/user/${user}`}>Home</a></button>
@@ -62,6 +63,7 @@ href={`https://fontend-sistu-production.up.railway.app/api/user/${user}`}>Home</
             </div>
           </div>
         </nav>
+        </div>
 
         <nav id="main-navbar" className="navbar navbar-expand-lg navbar-light fixed-top">
           <div className="container-logo">
@@ -96,7 +98,7 @@ href={`https://fontend-sistu-production.up.railway.app/api/user/${user}`}>Home</
     <nav className='navbar navbar-expand-lg navbar-light fixed-top'>
       
           {user ? (
-            
+            <div className='d-contents'>
             <ul className='navbar-nav ms-auto d-flex flex-row'>
               
              <div className='container-rigth-1'>
@@ -107,6 +109,7 @@ href={`https://fontend-sistu-production.up.railway.app/api/user/${user}`}>Home</
              </div>
             
             </ul>
+            </div>
             
           ) : (
             <p>Cargando perfil...</p>
