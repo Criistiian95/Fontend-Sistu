@@ -1,54 +1,50 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-
-const UserContext = createContext();
-
-export const getUserIdFromLocalStorage = () => {
-  const userId = localStorage.getItem('userId');
- 
-  return userId ? parseInt(userId, 10) : null;
-};
-
-export const UserProvider = ({ children }) => {
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
+import { api, getToken, clearSession } from "../api";
+const Context = createContext(null);
+export const getUserIdFromLocalStorage = () =>
+  sessionStorage.getItem("userId") || localStorage.getItem("userId");
+export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      fetchUserProfile(token);
+  const [loading, setLoading] = useState(!!getToken());
+  const [error, setError] = useState("");
+  const refresh = useCallback(async () => {
+    if (!getToken()) {
+      setUser(null);
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
+    setError("");
+    try {
+      const data = await api("/api/user/profile");
+      setUser(data.user);
+    } catch (e) {
+      setError(e.message);
+      setUser(null);
+    } finally {
+      setLoading(false);
     }
   }, []);
-  
-
-  const fetchUserProfile = (token) => {
-    // Realizar la solicitud para obtener los datos del usuario utilizando el token
-    fetch(`https://sistema-de-turnos-production-e4d9.up.railway.app/api/user/profile`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.user) {
-        setUser(data.user);
-      } else {
-        console.error('Error al obtener el perfil del usuario:', data.message);
-      }
-    })
-    .catch(error => {
-      console.error('Error al obtener el perfil del usuario:', error);
-    });
-  };
- 
-
+  useEffect(() => {
+    refresh();
+    const logout = () => {
+      clearSession();
+      setUser(null);
+      setLoading(false);
+    };
+    window.addEventListener("sismed:logout", logout);
+    return () => window.removeEventListener("sismed:logout", logout);
+  }, [refresh]);
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <Context.Provider value={{ user, setUser, loading, error, refresh }}>
       {children}
-    </UserContext.Provider>
+    </Context.Provider>
   );
-};
-
-
-export const useUser = () => {
-
-  return useContext(UserContext);
-};
+}
+export const useUser = () => useContext(Context);

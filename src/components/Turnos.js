@@ -1,167 +1,243 @@
-import React from "react";
-import { useNavigate,useParams } from "react-router-dom";
-import DoctorInfo from "./DoctorInfo";
-import PatientInfo from "./PatientInfo";
-import Horarios from "./Horarios";
-import { useHorariosContext } from "./HorariosContext";
-import { useDoctorContext } from "./DoctorContext";
-import { usePatientContext } from "./PatientContext";
-import { useFechasOcupadasContext } from './FechasContext';
-import swal from "sweetalert"
-import "../assets/Home.css"
-import Doctors from "./Doctors";
-import Patients from "./Patients";
-import "../assets/Turnero.css"
-import Navbar from "./Navbar";
-
-
-
-
-
-
-function Turnos() {
-
-  const { selectedDate } = useHorariosContext();
-  const { selectedDoctor } = useDoctorContext();
-  const { selectedPatient } = usePatientContext();
-  const { agregarFechaOcupada } = useFechasOcupadasContext();
-  const navigate = useNavigate()
-  const { userId } = useParams();
-
-  const mostrarAlerta = () => {
-    swal({
-      title: "Turno creado",
-      text: "Su turno se creo con exito",
-      icon: "success",
-      button: "Aceptar",
-      timer: 3000
-    })
-  };
-
-
-  const FechaOcupada = () => {
-    swal({
-      title: "Oopps...",
-      text: "Disculpe, elija otra fecha",
-      icon: "error",
-      button: "Aceptar",
-      footer: '<a href="#">Why do I have this issue?</a>',
-      timer: 3000
-    })
-  };
-
-
-  const handleGuardarTurno = async () => {
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { api } from "../api";
+import Page from "./Page";
+function localDate(date) {
+  const d = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+  return d.toISOString().slice(0, 16);
+}
+export default function Turnos() {
+  const [doctors, setDoctors] = useState(null);
+  const [doctorId, setDoctorId] = useState("");
+  const [dni, setDni] = useState("");
+  const [patient, setPatient] = useState(null);
+  const [date, setDate] = useState("");
+  const [notes, setNotes] = useState("");
+  const [error, setError] = useState("");
+  const [doctorError, setDoctorError] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [searching, setSearching] = useState(false);
+  const [success, setSuccess] = useState("");
+  const [attempt, setAttempt] = useState(0);
+  useEffect(() => {
+    const c = new AbortController();
+    setDoctorError("");
+    api("/api/doctor/list", { signal: c.signal })
+      .then(setDoctors)
+      .catch((e) => {
+        if (e.name !== "AbortError") setDoctorError(e.message);
+      });
+    return () => c.abort();
+  }, [attempt]);
+  async function search(e) {
+    e.preventDefault();
+    setSearching(true);
+    setError("");
+    setPatient(null);
+    setSuccess("");
     try {
-      if (selectedDoctor && selectedPatient && selectedDate) {
-        const fechaString = selectedDate.toDateString();
-        agregarFechaOcupada(fechaString);
-        const turnoData = {
-          paciente_id: selectedPatient.DNI,
-          doctor_id: selectedDoctor.tuition,
-          fecha: selectedDate,
-          hora: selectedDate,
-          especialidad: selectedDoctor.specialty.id,
-          estado_turno: true,
-          // Otras propiedades del turno, si es necesario
-        };
-        console.log("Paciente:", selectedPatient)
-        console.log("Doctor:", selectedDoctor);
-        console.log("fecha:", selectedDate)
-        console.log("especialidad:", selectedDoctor.specialty.id)
-
-        console.log("Turno:", turnoData);
-
-
-        // Realiza una solicitud POST al servidor para crear un nuevo turno
-        const respuesta = await fetch("https://sistema-de-turnos-production-e4d9.up.railway.app/api/shift/create", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-
-          body: JSON.stringify(turnoData),
-        })
-
-        if (!respuesta.ok) {
-          throw new Error(`Error ${respuesta.status} - ${respuesta.statusText}`);
-        }
-
-        const datos = await respuesta.json()
-        console.log("Turno creado:", datos)
-
-        mostrarAlerta();
-
-        navigate(0)
-
-      } else {
-        console.error("No se ha seleccionado un paciente o una fecha");
-
-        // Puedes mostrar un mensaje de error al usuario si falta información
-      }
-    } catch (error) {
-      FechaOcupada()
-      console.error("Error al crear el turno:", error);
+      const data = await api(
+        `/api/patient/search?dni=${encodeURIComponent(dni)}`,
+      );
+      setPatient(data.patient);
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setSearching(false);
     }
-  };
-
-
+  }
+  async function save(e) {
+    e.preventDefault();
+    if (!patient || !doctorId || !date) {
+      setError("Seleccioná paciente, médico y horario.");
+      return;
+    }
+    setBusy(true);
+    setError("");
+    setSuccess("");
+    try {
+      await api("/api/shift/create", {
+        method: "POST",
+        body: JSON.stringify({
+          paciente_id: patient.DNI,
+          doctor_id: doctorId,
+          fecha: new Date(date).toISOString(),
+          observaciones: notes,
+        }),
+      });
+      setSuccess(`Turno reservado para ${patient.name} ${patient.lastname}.`);
+      setDate("");
+      setNotes("");
+      setPatient(null);
+      setDni("");
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setBusy(false);
+    }
+  }
+  const doctor = doctors?.find((d) => d.tuition === doctorId);
+  const minimum = localDate(
+    new Date(Math.ceil((Date.now() + 60000) / 1800000) * 1800000),
+  );
   return (
-
-    
-    <section style={{ backgroundColor: "#AAF3E0" }}>
-      
-      <div className="container py-5 h-100 ">
-      <Navbar userId={userId} />
-        <div className='row d-flex justify-content-center align-items-center h-100'>
-          <div className='col col-xl-10'>
-          
-            <div className='card card-Tur' style={{ borderRadius:"1rem" }}>
-              <div className='row g-0'>
-                <div className="padding bg-secondary flex-column">
-                  <div className="container">
-                    
-                    <h1 className="h1">Turnos Disponibles</h1>
+    <Page
+      title="Agendar turno"
+      subtitle="Elegí el paciente, el profesional y el próximo horario."
+    >
+      <div className="booking-grid">
+        <div>
+          <section className="form-panel booking-step">
+            <h2>
+              <span>1</span> Paciente
+            </h2>
+            <form className="inline-search record-form" onSubmit={search}>
+              <div>
+                <label htmlFor="booking-dni">DNI</label>
+                <input
+                  id="booking-dni"
+                  inputMode="numeric"
+                  pattern="[0-9]{6,12}"
+                  required
+                  value={dni}
+                  disabled={searching || busy}
+                  onChange={(e) => {
+                    setDni(e.target.value);
+                    setPatient(null);
+                    setSuccess("");
+                  }}
+                  placeholder="Ingresá el DNI sin puntos"
+                />
+              </div>
+              <button className="secondary-button" disabled={searching || busy}>
+                {searching ? "Buscando…" : "Buscar"}
+              </button>
+            </form>
+            {patient ? (
+              <div className="success-alert">
+                ✓ {patient.name} {patient.lastname} · DNI {patient.DNI}
+              </div>
+            ) : (
+              <p className="muted">
+                ¿Es su primera consulta?{" "}
+                <Link to="/createPatient">Agregar paciente</Link>
+              </p>
+            )}
+          </section>
+          <section className="form-panel booking-step">
+            <h2>
+              <span>2</span> Profesional y horario
+            </h2>
+            {doctorError ? (
+              <div className="form-alert" role="alert">
+                {doctorError}{" "}
+                <button
+                  className="secondary-button"
+                  onClick={() => setAttempt((n) => n + 1)}
+                >
+                  Reintentar
+                </button>
+              </div>
+            ) : doctors === null ? (
+              <p role="status">Cargando profesionales…</p>
+            ) : doctors.length === 0 ? (
+              <p className="muted">
+                Todavía no hay profesionales. Pedile al administrador que
+                agregue uno.
+              </p>
+            ) : (
+              <form className="record-form" onSubmit={save}>
+                <div className="form-grid">
+                  <div className="full-width">
+                    <label htmlFor="booking-doctor">Profesional</label>
+                    <select
+                      id="booking-doctor"
+                      required
+                      value={doctorId}
+                      disabled={busy}
+                      onChange={(e) => setDoctorId(e.target.value)}
+                    >
+                      <option value="">Seleccioná un profesional</option>
+                      {doctors.map((d) => (
+                        <option value={d.tuition} key={d.tuition}>
+                          {d.lastname}, {d.name} · {d.specialty?.name}
+                        </option>
+                      ))}
+                    </select>
                   </div>
-                  <div className="container flex-column d-flex align-items-center ">
-
-                    <Horarios />
-
-                    <br />
-                    {selectedPatient ? (
-                      <div className="doctores">
-
-                        <PatientInfo {...selectedPatient} />
-                      </div>
-                    ) : (
-                      <p>No se ha seleccionado un paciente.</p>
-                    )}
-
-                    <div className="results"> <Patients /></div>
-
-                    {selectedDoctor ? (
-                      <div className="doctores">
-
-                        <DoctorInfo {...selectedDoctor} />
-                      </div>
-                    ) : (
-                      <p>No se ha seleccionado un médico.</p>
-                    )}
-                    <div className="results"> <Doctors /></div>
-
-
-
-                    <div className="btn container-btn ">
-                      <button className='btn btn-success btn-lg' type="reset" onClick={() => { handleGuardarTurno() }}>Guardar Turno</button>
-                    </div>
+                  <div className="full-width">
+                    <label htmlFor="booking-date">Fecha y hora</label>
+                    <input
+                      id="booking-date"
+                      type="datetime-local"
+                      step="1800"
+                      min={minimum}
+                      required
+                      value={date}
+                      disabled={busy}
+                      onChange={(e) => setDate(e.target.value)}
+                    />
+                    <small className="muted">
+                      Turnos cada 30 minutos. Horario local de tu dispositivo.
+                    </small>
+                  </div>
+                  <div className="full-width">
+                    <label htmlFor="booking-notes">
+                      Observaciones (opcional)
+                    </label>
+                    <textarea
+                      id="booking-notes"
+                      value={notes}
+                      maxLength={500}
+                      disabled={busy}
+                      onChange={(e) => setNotes(e.target.value)}
+                      rows="3"
+                    />
                   </div>
                 </div>
-              </div>
+                <button className="primary-button" disabled={busy || !patient}>
+                  {busy ? "Guardando turno…" : "Confirmar turno"}
+                </button>
+              </form>
+            )}
+          </section>
+          {error && (
+            <div className="form-alert" role="alert">
+              {error}
             </div>
-          </div>
+          )}
+          {success && (
+            <div className="success-alert" role="status">
+              {success} <Link to="/turns-patients">Consultar turnos</Link>
+            </div>
+          )}
         </div>
+        <aside className="booking-summary">
+          <span className="eyebrow">RESUMEN DEL TURNO</span>
+          <h2>Todo listo para atender.</h2>
+          <dl>
+            <dt>Paciente</dt>
+            <dd>
+              {patient
+                ? `${patient.name} ${patient.lastname}`
+                : "Pendiente de selección"}
+            </dd>
+            <dt>Profesional</dt>
+            <dd>
+              {doctor
+                ? `${doctor.name} ${doctor.lastname}`
+                : "Pendiente de selección"}
+            </dd>
+            <dt>Fecha y hora</dt>
+            <dd>
+              {date
+                ? new Date(date).toLocaleString("es-AR")
+                : "Elegí un horario"}
+            </dd>
+          </dl>
+          <p>La disponibilidad se verifica al confirmar la reserva.</p>
+        </aside>
       </div>
-    </section>
-  )
+    </Page>
+  );
 }
-export default Turnos

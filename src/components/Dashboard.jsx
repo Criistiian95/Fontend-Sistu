@@ -1,37 +1,61 @@
-import React from 'react';
-import { useParams } from "react-router-dom";
-import "../assets/Home.css";
-import "../assets/App.css"
-import "../assets/Turnero.css"
-import StateTurns from './StateTurns.js';
-import Navbar from './Navbar.jsx';
-
-function Dashboard() {
-  const { userId } = useParams();
-
+import React from "react";
+import { Link } from "react-router-dom";
+import Navbar from "./Navbar";
+import StateTurns from "./StateTurns";
+import { useUser } from "./UserContext";
+export default function Dashboard() {
+  const { user } = useUser();
+  const date = new Intl.DateTimeFormat("es-AR", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+  }).format(new Date());
   return (
-    <React.Fragment>
-
-      <section  style={{ backgroundColor: "#AAF3E0" }}>
-        <div className="container py-5 h-100">
-          <Navbar userId={userId} />
-          <div className='row d-flex justify-content-center align-items-center h-100'>
-          <div className='col col-xl-10'>
-          <div className='card card-Dash' style={{ borderRadius:"1rem", paddingTop:"10px" }}>
-            <div className='justify-content-center d-flex'>
-
-
-              <StateTurns />
-
-            </div>
-            </div>
-            </div>
+    <div className="dashboard-page">
+      <Navbar />
+      <main className="dashboard-content">
+        <div className="page-heading">
+          <div>
+            <span className="eyebrow">TU CONSULTORIO AL DÍA</span>
+            <h1>Resumen de la jornada</h1>
+            <p className="muted date-label">{date}</p>
           </div>
+          <Link className="primary-button" to="/turnos">
+            + Agendar turno
+          </Link>
         </div>
-      </section>
-
-    </React.Fragment>
+        <div className="quick-actions">
+          <Link to="/turns-patients">
+            <span>⌕</span>
+            <div>
+              <strong>Buscar pacientes</strong>
+              <small>Consultá sus turnos y datos</small>
+            </div>
+            <b>↗</b>
+          </Link>
+          <Link to="/createPatient">
+            <span>+</span>
+            <div>
+              <strong>Nuevo paciente</strong>
+              <small>Sumá un paciente al consultorio</small>
+            </div>
+            <b>↗</b>
+          </Link>
+          {Number(user.role_id) === 1 && (
+            <Link to="/createDoctor">
+              <span>+</span>
+              <div>
+                <strong>Equipo médico</strong>
+                <small>Registrá un nuevo profesional</small>
+              </div>
+              <b>↗</b>
+            </Link>
+          )}
+        </div>
+        <section className="agenda-panel">
+          <StateTurns />
+        </section>
+      </main>
+    </div>
   );
 }
-
-export default Dashboard;
