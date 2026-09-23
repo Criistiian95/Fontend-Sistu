@@ -1089,3 +1089,14 @@ select {
     align-items: flex-start;
   }
 }
+
+.clinical-form { display: block; }
+.clinical-form fieldset { border: 0; padding: 0; min-width: 0; }
+.clinical-form textarea { width: 100%; padding: 12px; border: 1px solid #cbd9d4; border-radius: 10px; resize: vertical; font: inherit; }
+.clinical-form label { display: block; margin-top: 18px; }
+.clinical-form .clinical-confirm { display: flex; gap: 12px; align-items: flex-start; margin: 24px 0; }
+.clinical-confirm input { width: auto; margin-top: 4px; }
+.clinical-entry { padding: 24px 0; border-bottom: 1px solid #dce7e2; }
+.clinical-entry h3 { font-size: 1.2rem; }
+.clinical-entry h4 { font-size: 1rem; margin-top: 20px; }
+.clinical-note { white-space: pre-wrap; overflow-wrap: anywhere; }

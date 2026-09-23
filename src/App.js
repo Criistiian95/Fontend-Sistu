@@ -10,6 +10,8 @@ import RegisterDoctors from "./components/RegisterDoctors";
 import TurnsPatients from "./components/TurnsPatients";
 import { UserProvider } from "./components/UserContext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ClinicalHistory from "./components/ClinicalHistory";
+import ClinicalAccounts from "./components/ClinicalAccounts";
 export default function App() {
   const protect = (page, admin = false) => (
     <ProtectedRoute admin={admin}>{page}</ProtectedRoute>
@@ -27,6 +29,8 @@ export default function App() {
                 path="/api/user/:userId"
                 element={protect(<Dashboard />)}
               />
+              <Route path="/historia-clinica" element={protect(<ClinicalHistory />)} />
+              <Route path="/accesos-profesionales" element={protect(<ClinicalAccounts />, true)} />
               <Route path="/turnos" element={protect(<Turnos />)} />
               <Route
                 path="/createPatient"

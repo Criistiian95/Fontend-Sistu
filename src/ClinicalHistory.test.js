@@ -1,0 +1,41 @@
+import React from 'react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import ClinicalHistory from './components/ClinicalHistory';
+import { useUser } from './components/UserContext';
+import { api } from './api';
+jest.mock('./api', () => ({ api: jest.fn() }));
+jest.mock('./components/UserContext', () => ({ useUser: jest.fn() }));
+jest.mock('./components/Page', () => ({ children }) => <main>{children}</main>);
+beforeEach(() => {
+  jest.clearAllMocks();
+  Object.defineProperty(global, 'crypto', { configurable: true, value: { randomUUID: () => '6d49406e-229a-40c7-8013-a85647ab0101' } });
+  useUser.mockReturnValue({ user: { id: 3, role_id: 3 } });
+});
+test('reception cannot load clinical records', () => {
+  useUser.mockReturnValue({ user: { role_id: 2 } });
+  render(<MemoryRouter><ClinicalHistory /></MemoryRouter>);
+  expect(screen.getByText(/requiere una cuenta profesional/)).toBeInTheDocument();
+  expect(api).not.toHaveBeenCalled();
+});
+test('failed save preserves draft and retry shows persisted entry', async () => {
+  const patient = { DNI: '12345678', name: 'Paciente', lastname: 'Ficticio' };
+  api.mockResolvedValueOnce({ patient, entries: [], next: null });
+  render(<MemoryRouter><ClinicalHistory /></MemoryRouter>);
+  fireEvent.change(screen.getByLabelText('DNI del paciente'), { target: { value: patient.DNI } });
+  fireEvent.click(screen.getByText('Abrir historia'));
+  const reason = await screen.findByLabelText('Motivo de consulta *');
+  fireEvent.change(reason, { target: { value: 'Control ficticio' } });
+  fireEvent.click(screen.getByRole('checkbox'));
+  api.mockRejectedValueOnce(new Error('Conexión interrumpida'));
+  fireEvent.click(screen.getByText('Guardar atención'));
+  expect(await screen.findByRole('alert')).toHaveTextContent('Conexión interrumpida');
+  expect(reason).toHaveValue('Control ficticio');
+  const submitted = JSON.parse(api.mock.calls[1][1].body);
+  api.mockResolvedValueOnce({ message: 'Atención guardada.', entry: { ...submitted, id: 5, author_name: 'Profesional', doctor_id: 'MP-1', created_at: new Date().toISOString() } });
+  fireEvent.click(screen.getByText('Guardar atención'));
+  await waitFor(() => expect(reason).toHaveValue(''));
+  expect(screen.getByText('Control ficticio')).toBeInTheDocument();
+  expect(JSON.parse(api.mock.calls[2][1].body).request_id).toBe(submitted.request_id);
+  expect(screen.getByLabelText('DNI del paciente')).toBeDisabled();
+});

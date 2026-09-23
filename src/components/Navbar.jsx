@@ -13,6 +13,8 @@ export default function Navbar() {
   ];
   if (Number(user.role_id) === 1)
     links.push(["/createDoctor", "Agregar médico", "+"]);
+  if (Number(user.role_id) === 1) links.push(["/accesos-profesionales", "Accesos profesionales", "+"]);
+  if (Number(user.role_id) === 3) links.push(["/historia-clinica", "Historia clínica", "≡"]);
   return (
     <>
       <header className="workspace-topbar">
